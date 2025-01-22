@@ -43,7 +43,7 @@ char	*ft_strjoin(char *line, char *buff)
 		return (line);
 	str = (char *)malloc((ft_strlen(line) + ft_strlen(buff) + 1));
 	if (str == NULL)
-		return (NULL);
+		return (free(line), NULL);
 	i = -1;
 	j = 0;
 	if (line)

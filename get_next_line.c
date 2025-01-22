@@ -17,6 +17,7 @@ char	*get_content(int fd)
 	int			bytesread;
 	char		*buff;
 	static char	*content = NULL;
+	char		*temp;
 
 	bytesread = 1;
 	while (bytesread > 0)
@@ -25,19 +26,21 @@ char	*get_content(int fd)
 		if (buff == NULL)
 			return (NULL);
 		bytesread = read(fd, buff, BUFFER_SIZE);
-		if (bytesread == 0)
+		if (bytesread <= 0)
 		{
 			free(buff);
 			break ;
 		}
-		if (bytesread == -1)
-		{
-			free(content);
-			content = NULL;
-			return (free(buff), NULL);
-		}
+		// if (bytesread == -1)
+		// {
+		// 	free(content);
+		// 	content = NULL;
+		// 	return (free(buff), NULL);
+		// }
 		buff[bytesread] = '\0';
-		content = ft_strjoin(content, buff);
+		temp = ft_strjoin(content, buff);
+		free (content);
+		content = temp;
 		free(buff);
 		if (content == NULL)
 			return (NULL);
@@ -65,7 +68,7 @@ char	*ft_get_line(char *content)
 		return (NULL);
 	j = 0;
 	if (k == i)
-		return (NULL);
+		return (free(line), NULL);
 	while (k < i)
 		line[j++] = content[k++];
 	line[j] = '\0';
